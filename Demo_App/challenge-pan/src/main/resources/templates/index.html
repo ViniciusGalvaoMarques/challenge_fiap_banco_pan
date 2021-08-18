@@ -1,0 +1,188 @@
+	<!DOCTYPE html>
+	<html lang="pt" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<title>FIAP PAN</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link th:href="@{/webjars/materializecss/1.0.0/css/materialize.min.css}" rel="stylesheet">
+		<link th:href="@{/css/app.css}" rel="stylesheet">
+	</head>
+	<body class="white-text" style="padding: 1em; padding-right: 3em; padding-left: 3em; background-color: #282a36;">
+
+	<div class="row grey darken-4 z-depth-2 app_card">
+		<div class="row " style="background-color: #1a1a1a">
+			<div class="col" style="padding: 3px; padding-left: 10px" ><span class="grey-text text-darken-1" style=" font-size: 1.3em; font-weight: bold;" >PROJETO ( GITHUB )</span></div>
+		</div>
+		<div class="row">
+			<a href="https://github.com/ViniciusGalvaoMarques/challenge_fiap_banco_pan">https://github.com/ViniciusGalvaoMarques/challenge_fiap_banco_pan</a>
+		</div>
+	</div>
+
+		<!–- CUSTOM RULE -–>
+		<div class="row grey darken-4 z-depth-2 app_card">
+			<div class="row " style="background-color: #1a1a1a">
+				<div class="col s10 m10" style="padding: 3px; padding-left: 10px" ><span class="grey-text text-darken-1" style=" font-size: 1.3em; font-weight: bold;" >CUSTOM RULE</span></div>
+				<div class="col s2 m2" style="padding: 3px; padding-left: 10px" >
+					<a th:href="@{/download?bucket=fiap-pan-rules&key=template.json}" class="light-blue-text text-darken-1" download="template_rule.json">Download Custom Rule Template</a>
+
+				</div>
+			</div>
+			<div class="row">
+				<table>
+					<thead class="centered">
+					<tr class="light-blue-text text-darken-1" style="font-weight: bold;">
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="r : ${rules}">
+						<td><span th:text="${r.key}"></span></td>
+						<td><a th:href="@{/download(bucket=${r.bucketName},key=${r.key})}" class="light-blue-text text-darken-1" th:download="${r.key}">Download</a></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row">
+				<form method="post" enctype="multipart/form-data" th:action="@{/rule}">
+					<div class="row">
+						<div class="col s4 m4">
+							<div class="file-field input-field">
+								<div class="grey darken-4 z-depth-0">
+									<input type="file" id="uploadrule" name="uploadrule">
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text" placeholder="File to upload . . .">
+								</div>
+
+							</div>
+							<button class="btn waves-effect waves-light grey darken-4 light-blue-text text-darken-1" type="submit" name="action">Overwrite with new rule
+								<i class="material-icons right">send</i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!–- DATA LAKE BUCKET -–>
+		<div class="row grey darken-4 z-depth-2 app_card">
+			<div class="row " style="background-color: #1a1a1a">
+				<div class="col " style="padding: 3px; padding-left: 10px" ><span class="grey-text text-darken-1" style=" font-size: 1.3em; font-weight: bold;" >DATA LAKE BUCKET</span></div>
+			</div>
+			<div class="row">
+				<table class="highlight centered">
+					<thead>
+						<tr class="light-blue-text text-darken-1" style="font-weight: bold;">
+							<th>Bucket</th>
+							<th>Key</th>
+							<th>Size</th>
+							<th>Last Modified</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="df : ${dataframes}">
+							<td><span th:text="${df.bucketName}"></span></td>
+							<td><span th:text="${df.key}"></span></td>
+							<td><span th:text="${df.size}"></span></td>
+							<td><span th:text="${df.lastModified}"></span></td>
+							<td><a th:href="@{/download(bucket=${df.bucketName},key=${df.key})}" class="light-blue-text text-darken-1" th:download="${df.key}">Download</a></td>
+							<td><a th:href="@{/deleteobject(bucket=${df.bucketName},key=${df.key})}" class="red-text text-darken-3">Delete</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row">
+				<form method="post" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col s4 m4">
+							<div class="file-field input-field">
+								<div class="grey darken-4 z-depth-0">
+									<input type="file" id="uploadfile" name="uploadfile">
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text" placeholder="File to upload . . .">
+								</div>
+
+							</div>
+							<button class="btn waves-effect waves-light grey darken-4 light-blue-text text-darken-1" type="submit" name="action">Upload
+									<i class="material-icons right">send</i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!–- DATA QUALITY BUCKET -–>
+		<div class="row grey darken-4 z-depth-2 app_card">
+			<div class="row " style="background-color: #1a1a1a">
+				<div class="col s4 m4" style="padding: 3px; padding-left: 10px"><span class="grey-text text-darken-1" style="font-weight: bold; font-size: 1.3em">QUALITY METRICS BUCKET</span></div>
+			</div>
+			<div class="row">
+				<table class="highlight centered">
+					<thead>
+						<tr class="light-blue-text text-darken-1" style="font-weight: bold;">
+							<th>Bucket</th>
+							<th>Key</th>
+							<th>Size</th>
+							<th>Last Modified</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="dq : ${dataqualitys}">
+							<td><span th:text="${dq.bucketName}"></span></td>
+							<td><span th:text="${dq.key}"></span></td>
+							<td><span th:text="${dq.size}"></span></td>
+							<td><span th:text="${dq.lastModified}"></span></td>
+							<td><a th:href="@{/download(bucket=${dq.bucketName},key=${dq.key})}" th:download="${dq.key}" class="light-blue-text text-darken-1">Download</a></td>
+							<td><a th:href="@{/deleteobject(bucket=${dq.bucketName},key=${dq.key})}"  class="red-text text-darken-3">Delete</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!–- GLUE JOB -–>
+		<div class="row grey darken-4 z-depth-2 app_card">
+			<div class="row " style="background-color: #1a1a1a">
+				<div class="col " style="padding: 3px; padding-left: 10px" ><span class="grey-text text-darken-1" style=" font-size: 1.3em; font-weight: bold;" >GLUE JOBS</span></div>
+			</div>
+			<div class="row">
+				<table class="centered">
+					<thead>
+					<tr class="light-blue-text text-darken-1" style="font-weight: bold;">
+						<th>Job ID</th>
+						<th>Status</th>
+						<th>Start On</th>
+						<th>End On</th>
+						<th>Error</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="gj : ${gluejobs}">
+						<td><span th:text="${gj.jobId}"></span></td>
+						<td>
+							<span th:if="${gj.status == 'RUNNING'}" th:text="${gj.status}" class="green-text text-accent-3">
+							</span><span th:unless="${gj.status == 'RUNNING'}" th:text="${gj.status}"></span>
+						</td>
+						<td><span th:text="${gj.startTime}"></span>
+						<td><span th:text="${gj.endTime}"></span>
+						<td><span th:text="${gj.errorMsg}"></span>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<script th:src="@{/webjars/materializecss/1.0.0/js/materialize.min.js}"></script>
+		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript">M.AutoInit();</script>
+	</body>
+	</html>
