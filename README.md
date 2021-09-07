@@ -1,11 +1,13 @@
 ## **Challenge Banco Pan**
-**Sponsor:** Banco Pan
-**Organizer:** FIAP ( Faculdade de Informática e Administração Paulista )
-**Challenge:** Create parameterized data quality mechanism (Assumption, use AWS)
+
+ - **Sponsor:** Banco Pan
+ - **Organizer:** FIAP ( Faculdade de Informática e Administração Paulista )
+ - **Challenge:** Create parameterized data quality mechanism (Assumption, use
+
+ AWS)
 
 ## Solution
 **Technologies**
-
  - Java
  - Spring
  - Python
